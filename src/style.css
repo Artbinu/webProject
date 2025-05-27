@@ -5,6 +5,14 @@ body {
   padding: 0;
 }
 
+.container {
+  height: 700px;
+}
+
+.page-number {
+  margin-bottom: 30px;
+}
+
 /* ✅ 상단바 스타일 */
 .top-bar {
   display: flex;

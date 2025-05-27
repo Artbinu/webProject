@@ -55,6 +55,7 @@ $result = $stmt->get_result();
   <title>웹 애플리케이션 메인 페이지</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link href="style.css" rel="stylesheet" />
+  <link href="footer.css" rel="stylesheet" />
 </head>
 <body>
   <!-- ✅ 상단 바 -->
@@ -98,19 +99,22 @@ $result = $stmt->get_result();
       <input type="text" name="query" class="form-control" placeholder="게시글 검색...">
     </form>
 
-    <?php while ($row = $result->fetch_assoc()): ?>
-    <div class="post-box">
-      <div class="post-title"><?= htmlspecialchars($row['title']) ?></div>
-      <div class="text-muted">
-        작성자: <?= htmlspecialchars($row['author_name']) ?> |
-        카테고리: <?= htmlspecialchars($row['cate_name']) ?> |
-        작성시간: <?= $row['created_at'] ?> |
-        조회수: <?= $row['views'] ?? 0 ?>
+  <?php while ($row = $result->fetch_assoc()): ?>
+    <a href="post_view.php?post_id=<?= (int)$row['post_id'] ?>" class="text-decoration-none text-dark">
+      <div class="post-box">
+        <div class="post-title"><?= htmlspecialchars($row['title']) ?></div>
+        <div class="text-muted">
+          작성자: <?= htmlspecialchars($row['author_name']) ?> |
+          카테고리: <?= htmlspecialchars($row['cate_name']) ?> |
+          작성시간: <?= $row['created_at'] ?> |
+          조회수: <?= $row['views'] ?? 0 ?>
+        </div>
+        <div class="mt-2"><?= nl2br(htmlspecialchars(mb_substr($row['content'], 0, 150))) ?>...</div>
       </div>
-      <div class="mt-2"><?= nl2br(htmlspecialchars(mb_substr($row['content'], 0, 150))) ?>...</div>
-    </div>
-    <?php endwhile; ?>
+    </a>
+  <?php endwhile; ?>
   </div>
+
 
     <!-- 페이지 번호 -->
     <div class="page-number mt-4">
@@ -137,5 +141,6 @@ $result = $stmt->get_result();
       }, 2000);
     });
   </script>
+<?php include 'footer.php'; ?>
 </body>
 </html>

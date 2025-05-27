@@ -10,10 +10,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $confirm_password = $_POST["confirm_password"];
     $name = trim($_POST["name"]);
     $email = trim($_POST["email"]);
-    $birth = $_POST["birth"];
+
+    // 생년월일 조합
+    $birth_year = $_POST["birth_year"];
+    $birth_month = $_POST["birth_month"];
+    $birth_day = $_POST["birth_day"];
+    $birth = "$birth_year-$birth_month-$birth_day";
 
     // 유효성 검사
-    if (empty($user_id) || empty($name) || empty($email) || empty($birth)) {
+    if (empty($user_id) || empty($name) || empty($email) || empty($birth_year) || empty($birth_month) || empty($birth_day)) {
         $errors[] = "모든 항목을 입력해주세요.";
     }
 
@@ -23,6 +28,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($_POST["password"] !== $confirm_password) {
         $errors[] = "비밀번호가 일치하지 않습니다.";
+    }
+
+    if (!checkdate((int)$birth_month, (int)$birth_day, (int)$birth_year)) {
+        $errors[] = "유효하지 않은 생년월일입니다.";
     }
 
     // 아이디 중복 검사
@@ -61,6 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <title>회원가입</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link href="style.css" rel="stylesheet" />
+  <link href="footer.css" rel="stylesheet" />
 </head>
 <body>
   <div class="top-bar">
@@ -97,19 +107,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <label for="name" class="form-label">이름</label>
         <input type="text" class="form-control" id="name" name="name" required/>
       </div>
+            <div class="mb-3">
+        <label class="form-label">생년월일</label>
+        <div class="d-flex gap-2">
+          <select class="form-select" name="birth_year" required>
+            <option value="">년</option>
+            <?php
+              $current_year = date("Y");
+              for ($i = $current_year; $i >= 1900; $i--) {
+                  echo "<option value=\"$i\">$i</option>";
+              }
+            ?>
+          </select>
+
+          <select class="form-select" name="birth_month" required>
+            <option value="">월</option>
+            <?php for ($i = 1; $i <= 12; $i++): ?>
+              <option value="<?= sprintf('%02d', $i) ?>"><?= $i ?></option>
+            <?php endfor; ?>
+          </select>
+
+          <select class="form-select" name="birth_day" required>
+            <option value="">일</option>
+            <?php for ($i = 1; $i <= 31; $i++): ?>
+              <option value="<?= sprintf('%02d', $i) ?>"><?= $i ?></option>
+            <?php endfor; ?>
+          </select>
+        </div>
+      </div>
       <div class="mb-3">
         <label for="email" class="form-label">이메일</label>
         <input type="email" class="form-control" id="email" name="email" required/>
       </div>
-      <div class="mb-3">
-        <label for="birth" class="form-label">생년월일</label>
-        <input type="date" class="form-control" id="birth" name="birth" required/>
-      </div>
       <button type="submit" class="btn btn-primary">회원가입</button>
     </form>
+
     <div class="text-center mt-3">
       <a href="login.php">로그인이 필요하신가요?</a>
     </div>
   </div>
+
+<?php include 'footer.php'; ?>
 </body>
 </html>

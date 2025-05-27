@@ -64,6 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <title>로그인 페이지</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link href="style.css" rel="stylesheet" />
+  <link href="footer.css" rel="stylesheet" />
 </head>
 <body>
   <div class="top-bar">
@@ -92,5 +93,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <a href="register.php">회원가입이 필요하신가요?</a>
     </div>
   </div>
+  <?php include 'footer.php'; ?>
 </body>
 </html>

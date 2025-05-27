@@ -57,6 +57,7 @@ $categories = $conn->query("SELECT * FROM Category ORDER BY category_id");
   <title>글쓰기</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link href="style.css" rel="stylesheet" />
+  <link href="footer.css" rel="stylesheet" />
 </head>
 <body>
   <div class="top-bar">
@@ -95,5 +96,6 @@ $categories = $conn->query("SELECT * FROM Category ORDER BY category_id");
       <button type="submit" class="btn btn-primary">작성 완료</button>
     </form>
   </div>
+<?php include 'footer.php'; ?>
 </body>
 </html>

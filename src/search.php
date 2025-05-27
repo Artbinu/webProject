@@ -29,6 +29,7 @@ if ($query !== '') {
   <title>검색 결과</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link href="style.css" rel="stylesheet" />
+  <link href="footer.css" rel="stylesheet" />
 </head>
 <body>
   <div class="top-bar">
@@ -65,5 +66,6 @@ if ($query !== '') {
       <p class="mt-3">검색 결과가 없습니다.</p>
     <?php endif; ?>
   </div>
+<?php include 'footer.php'; ?>
 </body>
 </html>
